@@ -1,0 +1,147 @@
+Objects
+
+There are 8 Data Types in JS - 7 are primitive (values contain only single entity/thing)
+- Objects are used to store keyed collections of various data and more complex entities.
+- Is created with {..} with list of properties which are key:value pairs , where key is string and value can be anything.
+- Can be created using two syntaxes : 
+let user = new object();    //object constructor syntax
+let user = {};    //object literal syntax
+
+let user = {
+    name : "Charul",
+    email : "charul@tekion.com"
+    };
+To remove a property we use 
+delete user.email;
+Multi word property names can also be added but then we have to quote them
+let user = {
+    name : "Charul",
+    email : "charul@tekion.com",
+    "Full Name" : "Charul Srinivas"
+    };
+And to access this multiword property the dot doesn’t work we have to use brackets 
+user["Full Name"];
+//this also works 
+user[name];
+
+Property Value Shorthand 
+
+- As previously we were writing 
+function JsUser(name, age){
+    return{
+    name : name,
+    age : age
+    };
+}
+
+let user = ("Charul", 10);
+console.log(user.age);
+
+Instead we can directly write it as :
+
+function JsUser(name, age){
+	return{
+	name,
+	age,
+	};
+}
+
+In operator
+
+It is possible to access any property and if the property doesn’t exists also it will return undefined and not an error.
+let user = { name: "Charul", age: 10 };
+
+console.log( "age" in user );        // true, user.age exists
+console.log( "email" in user );      // false, user.email doesn't exist
+//we can also write it as 
+let key = "age";
+console.log(key in user);
+
+For…In loop
+
+To get the access of all the keys 
+for(key in object){}
+
+Like for the above example
+for (let key in user) {
+  // keys
+  console.log(key);     // name, age
+  // values for the keys
+  console.log(user[key]);  
+}
+
+- Okay so Integer Properties are always sorted but other properties appear in the fashion of their creation
+- so if we want the codes of the country to maintain the order of creation we can add a + in front of the integer 
+
+
+Object References and Copying
+
+- Objects are copies by Reference and the primitive values are copied by whole value
+* A variable assigned to an object stores not the object itself, but its “address in memory” – in other words “a reference” to it.
+* When an object variable is copied, the reference is copied, but the object itself is not duplicated.
+
+let user = { name: "John" };
+let admin = user; // copy the reference
+Now we have two variables, each storing a reference to the same object:
+
+- Comparing by reference we get to know that two objects are equal only if they are reference to same object or are the same object but if they are two separate objects they are not equal.
+- Const objects can be changed
+
+We can clone/copy the whole structure and still the first will not be changed if any changes will be made to cloned one. 
+
+let user = {
+  name: "John",
+  age: 30
+};
+
+let newuser = {};
+for (let key in user) {
+  newuser[key] = user[key];
+}
+// now newuser is a fully independent object with the same content
+newuser.name = "Pete";
+alert( user.name );
+
+StructuredClone is a method which is used to copy the non-primitive data from the object, as we know that objects are copied by reference 
+
+let user = {
+  name: "John",
+  sizes: {
+    height: 182,
+    width: 50
+  }
+};
+
+let clone = structuredClone(user);
+console.log(user.sizes === clone.sizes);   // It will give false, different objects
+
+user.sizes.width = 60;    // change a property from one place
+console.log(clone.sizes.width);     // It will give 50, hence not related
+
+Object Methods, “This”
+
+- Okay so we can assign functions to the objects as properties and those are called methods.
+- For the previous user objects created we can assign 
+User.sayHi = function() {
+Console.log(“Hello !”);
+};
+User.sayHi();
+
+In shorthand we can also write it as 
+User = {
+	sayHi() {
+		console.log(“hello!”);
+	}
+};
+
+
+- In JavaScript this is “free”, its value is evaluated at call-time and does not depend on where the method was declared, but rather on what object is “before the dot”.
+
+- Overall we got to know that 
+    - Functions that are stored in object properties are called “methods”.
+    - Methods allow objects to “act” like object.doSomething().
+    - Methods can reference the object as this.
+    - The value of this is defined at run-time.
+    - When a function is declared, it may use this, but that this has no value until the function is called.
+    - A function can be copied between objects.
+    - When a function is called in the “method” syntax: object.method(), the value of this during the call is object.

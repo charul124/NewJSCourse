@@ -1,0 +1,227 @@
+Week -3 
+Type Coercion :
+
+Converting one data type into another data type so that it can carry out operations without running into the error.
+
+First example is :
+
+1 == ‘1’
+ => true;
+
+
+true+1
+=> 2;
+
+So In JS everything is either converted to number or a string for comparisons
+
+How does JS decides to convert into 
+    - Implicit (automatically during the runtime)
+        - Operator based
+        - Boolean Context
+        - Primitive Context
+    - Explicit (manually done)
+        - toString()
+        - parseInt()
+
+‘1’ * 3;
+=> 3
+
+‘e’ - 3
+=> Nan 
+
+- simply a technique where JS tries to interpret and do something by itself
+- okay moreover type conversion and Type Coercion are different as type conversion is done by us and type coercion is done by JS
+console.log("Hello I am Charul !");
+- adding string and number will concatenate but subtracting will give 0 because JS tries to convert string to number
+
+console.log('5' - 5);
+console.log('5' + 5);
+console.log('5' * 5);
+console.log('5' / 5);
+- we can check type of anything with keyword typeof
+const giveType = typeof 5;
+console.log(giveType);
+
+- true is considered 1 and false as 0 in JS
+const adder = true+5;
+console.log(adder);
+
+- values that are interpreted as false 
+- fasle , 0 , ''(empty string), null, undefined and apart from this everything is considered as true
+const logDetails = [];
+const logId = logDetails[0];
+if(logId){
+    console.log("Successful");
+}
+else{
+    console.log("Auth Failed");
+}
+
+- To String
+    - Array of Null and undefined when they are converted to string they disappear and are not present
+    - And empty object {} ->  “[object Object]”
+    - Manually overwriting the string {toString/{return “X”;}}. -> “X”
+
+- To Number
+    - “” -> 0                              - [“”] -> 0
+    - “009” -> 9                       -  coercion of array or object return this like the itself.
+    - “.” -> NaN
+    - Null -> 0
+    - Undefined  -> NaN
+    - Also converts hexadecimals
+
+Functions
+
+
+funcstate();
+// console.log(namedFunction);
+// namedFunction();
+// console.log(a);
+// a();
+console.log(funcexp);
+// b(firstclassFunction);
+
+---------------------------------------------
+
+- function declaration : a function declaration is a function that is bound to an identifier or name
+- function statement : a function statement is a function that is performed by a function declaration
+
+function funcstate(){
+    console.log(funcstate);
+    console.log("I am a function statement");
+}
+
+---------------------------------------------
+- function expression : a function expression is a function that is assigned to a variable
+- function expression can be named or anonymous
+
+var funcexp = function(){
+    console.log("I am a function expression");
+}
+console.log(funcexp); //gives the function definition
+funcexp(); //gives the output
+- gives undefined because function expression is not hoisted
+- major diference between function statement and function expession is Hoisting
+---------------------------------------------
+- anonymous function : functions that are not declared with a name and will give error
+- are used in place where functions are used as values
+       
+ // function(){
+        //     console.log("I am an anonymous function");
+        // }
+function anonyfunc(anotheranonymous){
+    anotheranonymous();
+}
+anonyfunc(function(){
+    console.log(anonyfunc);
+    console.log("I am an anonymous function");
+})
+---------------------------------------------
+
+- named Functions : functions declare with a name using the function keyword
+- cannot be called before they are defined
+
+var a = function namedFunction(){
+    console.log(namedFunction);
+    console.log("I am a named function");
+    // namedFunction(); // will give error and result in maximum call stack size exceeded
+}
+a();
+---------------------------------------------
+
+- First Class Functions : functions that can be assigned to a variable, passed as an argument to another function and can be returned from another function
+
+var z = function firstclassFunction(){
+    console.log("I am a first class function");
+}
+function b(param1){
+    console.log(param1);
+    console.log("I am a function that accepts another function as an argument");
+    param1();
+}
+b(z);
+---------------------------------------------
+
+- Arrow Functions : a shorter syntax for writing function expressions
+- does not have its own this, arguments, super or new.target
+
+const arrowFunc = () => {
+    console.log(arrowFunc);
+    console.log("I am an arrow function");
+}
+same can be written as 
+const arrowfunction = () => console.log("I am an arrow function");
+arrowFunc();
+---------------------------------------------
+- Higher Order Functions : functions that accept another function as an argument or return another function as a return value
+
+function copyarrayandmanipulate(input, instructions){
+    const output = [];
+    for(let i = 0; i < input.length; i++){
+        output.push(instructions(input[i]));
+    }
+    return output;
+}
+const mulby2 = (input) => input*2;
+function divby2(input){
+    return input/2;
+}
+function add10(input){
+    return input+10;
+}
+const mulres = copyarrayandmanipulate([1,2,3], mulby2);
+console.log(mulres);
+const divres = copyarrayandmanipulate([1,2,3], input => input/2);
+console.log(divres);
+const addres = copyarrayandmanipulate([1,2,3], add10);
+console.log(addres);
+
+- and for this example we can say that copyarrayandmanipulate is a higher order function and mulby2, divby2, add10 are callback functions
+- Callback Functions : functions that are passed as an argument to another function
+ ---------------------------------------------
+
+- IIFE : Immediately Invoked Function Expression
+- scope of IIFE is limited to the function itself and does not pollute the global scope
+
+(function iife(){
+    console.log("I am an IIFE statement"); 
+}());
+the upper one is the named iife and lower one is unnamed iife
+
+( (name) => {
+    console.log(`I am another ${name} statement`);
+})("IIFE");
+
+---------------------------------------------
+//Compose : the process of combining two or more functions to produce a new function
+//Pipe : the process of combining two or more functions to produce a new function
+
+const add2 = x => x+2;
+const subtract1 = x => x-1;
+const mul5 = x => x*5;
+
+const result = add2(subtract1(mul5(10)));
+console.log(result);
+// const newresult = compose(add2, subtract1, mul5)(10);
+// console.log(newresult);
+
+// const compose = function(...functions){
+//     return function(value){
+
+//     }
+// }
+
+//Currying : the process of converting a function that takes multiple arguments into a function that takes them one at a time
+
+
+
+
+
+
+1. Prototype (not priority)
+2. Asynchronous JS , promises
+3. Why everything is object in js 
+4. Why JS uses object in everything
+5. Similarity in Class and functions
+6. Pros and cons of class and functions 
+7. 

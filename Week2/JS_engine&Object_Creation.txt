@@ -1,0 +1,253 @@
+JavaScriptinfo 
+
+1.4 Searching : getElements*, querySelector*
+-  Okay so accessing the elements are easy when they are nearby by the child method but if they are not near we have to use id’s
+- document.getElementsById / ByClass / ByName ….
+- There’ll be only error when we have declared same name as id before in the script or else everything works fine (hence id must be unique)
+- 
+DOM Targeting Methods
+- querySelector.  -> targets the first element only
+    - Here we have elem.matches  -> returns true/false
+    - Also elem.closest. ->  looks for the nearest ancestor(css)
+- querySelectorAll ->  targets all the elements present in the document and returns an array
+
+
+Another mistake is to write:
+document.getElementsByTagName('input').value = 5;
+That won’t work, because it takes a collection of inputs and assigns the value to it rather than to elements inside it.
+We should either iterate over the collection or get an element by its index, and then assign, like this:
+// should work (if there's an input)
+document.getElementsByTagName('input')[0].value = 5; //works bcoz collection
+
+
+About JS Engine
+    - How does JS run  - actually it runs under certain environment
+            - Browser - client side JS code (dynamic interactivity)
+            - Node.Js - server side JS code
+        - Browser
+            - We have JS Engine (Google  =   V8)
+            - Program written in C++ converts JS code into a code processor can understand that follows ECMA Script
+            - Engines
+                - Firefox = spidermonkey
+                - Internet Explorer = chakra
+                - Safari = javascriptcore
+            - The whole workflow 
+                - JS code (what we have written - human readale)
+                - Parser (checks the syntax & rules)
+                    - Breaks down the code into the tokens then converted into nodes which is further converted to AST (abstract syntax tree)
+                    - We have bodies and declarations under AST
+                - AST (abstract syntax tree) - parser creates this tree
+                    - Why parser creates AST ?  Easier to convert to machine code when we have it in tree DS.
+            - Now we have real engine working
+                - Ignition Interpreter is by V8 (line - by- line)- takes the AST then interpreter creates it to Intermediate representation (IR)
+                - IR is kind of byte code (with registers and accumulators)
+                    - Why IR ?  As we have different hardwares like intel and stuff so byte code is universal for everything so hence IR can easily be converted to machine code.
+                - Using Memory Heap and Call Stack
+                - In between we have different steps as well where interpreter forms shapes table of the objects (using the registers and accumulators) for the optimization/ we have Inline Caching (simply get similar results in the future as well and no need to form shapes again)
+                - we have turbofan optimizer to generate machine code (monomorphic - best case for similar shapes) or else will go back to ignition interpreter in runtime. 
+                - Compiler - takes byte code and converts to machine code.
+            - JS uses JIT (just-in-time) compiler, mixture of interpreter and compiler. -  High performance and optimization
+
+1.1 Parsing
+
+        - Further we have compilation and Execution
+            - Using Memory Heap and Call Stack
+            - This works using Mark and Sweep Algorithm, for the garbage collection (caching)
+            - Basic idea about Mark & Sweep Algo:
+                - It comprise of 2 phases 
+                    - 1. Mark phase
+                    - 2. Sweep phase
+                - All objects are marked as 0 initially (at creation) and in mark phase the objects that will be accessible are marked as 1 (reachable) by a DFS graph traversal.
+                - During sweep phase, the objects marked with 0 are removed from heap memory. and also all reachable objects are again initialized with 0 (made unreachable) because the algorithm will run again.
+
+
+
+Object Creation
+
+- object literals
+- can also initialised through object.create
+
+    object literals are created in the key:value pairs
+    objects can also have other objects inside them
+    
+const JsUser = {
+        name : "Charul",
+        "Full Name" : "Charul Srinivas",
+        country : "India",
+        isLoggedIn : true,
+        lastLogin : ["Monday", "Wednesday"]
+    }
+
+    //this is how we can access the values
+    console.log(JsUser.country);
+    console.log(JsUser["Full Name"]);
+
+    JsUser.isLoggedIn = false;
+    console.log(JsUser.isLoggedIn);
+
+    JsUser.greeting = function(){
+        console.log("Hello Everyone!");
+    }
+
+    console.log(JsUser.greeting());
+
+    // we can use string interpulation
+    JsUser.greetingto = function(){
+        console.log(`Hello ${this.name}`);
+    }
+    console.log(JsUser.greetingto());
+
+    JsUser.id = "5123";
+    console.log(JsUser);
+    
+    const obj1 = {1 : "a", 2 : "b"};
+    const obj2 = {3 : "c", 4 : "d"};
+
+    const obj3 = {...obj1, ...obj2}; //spread operator
+    console.log(obj3);
+    console.log(Object.keys(JsUser));
+    console.log(Object.values(JsUser));
+    console.log(Object.entries(JsUser));
+
+    //we can also have multiple objects inside one array
+
+
+    // getName();   // can be accessed
+    // console.log(x);    // outputs undefined
+    // var x = 7;
+    // console.log(x);
+    // function getName(){
+    //  console.log("Hello");
+    //     console.log(x);
+    // }
+    // getName();
+
+    var a = 10;
+    function one(){
+        var a = 100;
+        console.log(a);
+        two();
+        function two(){
+            var a = 200;
+            console.log(a);
+        }
+    }
+    console.log(a);
+    one();
+    
+
+    console.log(a);
+    var a = 10;
+    let b = 20;
+    const c = 30;
+    console.log(a);
+    console.log(b);
+    console.log(c);
+
+    var getName = ()  =>  {
+    Console.log("Hello Charul");
+    }  
+
+    let marbles = prompt("which colour marbles do you have?", "Red");
+    let bag = {
+        [marbles] : 20,
+    };
+    console.log(bag.Red);
+    console.log(bag[marbles]);
+
+    let user = {
+        name : "Charul",
+        age : 10,
+        "+49": "Germany",
+        "+41": "Switzerland",
+        "+44": "Great Britain",
+        // ..,
+        "+1": "USA",
+    };
+
+    for(let key in user){
+        console.log(key);
+        // console.log(+key); //for numbers 
+        console.log(user[key]);
+    }
+
+    let obj = {
+    };
+    function isEmpty(obj) {
+        for (let key in obj) {
+        // if the loop has started, there is a property
+        return false;
+        }
+    return true;
+    }
+    console.log(isEmpty(obj));
+    
+
+    Usage of This 
+    let user1 = {
+        name : "Charul",
+        age : 10,
+    };
+
+    let user2 = {
+        name : "John",
+        age: 20,
+    };
+    user1.sayHi = sayHi;
+    user2.sayHi = sayHi;
+    function sayHi(){
+        console.log("Hello!", this.name);
+        // console.log(this);    // this will give undefined
+        
+    }
+    
+    user1.sayHi();
+    user2.sayHi();
+
+    let calculator = {
+    sum() {
+        return this.a + this.b;
+    },
+
+    mul() {
+        return this.a * this.b;
+    },
+
+    read() {
+        this.a = +prompt('a?', 0);
+        this.b = +prompt('b?', 0);
+    }
+    };
+
+    calculator.read();
+    alert( calculator.sum() );
+    alert( calculator.mul() );
+
+
+
+    function User(name){
+    this.name = name;
+    this.age = 10;
+    this.isLoggedin = true;
+
+    this.sayBye = function(){
+        console.log("Bye I am", this.name,"!");
+    };
+    }
+    let customer = new User("Charul");
+    console.log(customer.name);
+    console.log(customer.age);
+    console.log(customer.isLoggedin); 
+    customer.sayBye();
+    
+    let map = new Map();
+
+    map.set('1', 'str1');
+    map.set(1, 'num1'); 
+    map.set(true, 'bool1');
+    console.log(map.get(1));
+    console.log(map.size());
+    Maps can also store objects as keys
+    for iteration over maps we use For...of loop only 
+    sets are used if we do not need duplicates
+

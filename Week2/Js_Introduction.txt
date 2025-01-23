@@ -1,0 +1,100 @@
+Monday (13/01/2025)
+You-Dont-Know-JS/get-started/ch1.md at 2nd-ed · getify/You-Dont-Know-JS · GitHub
+
+Started reading getting to know ow JS Yet 
+Concepts covered are
+- ES6 (ecma script)
+    - Ecma International's TC(Technical committee)39 is a group of JavaScript developers
+- alert(...), console.log(…) may or may not be js accordingly
+- Some quirks
+- A multi-paradigm language
+    - Object Oriented
+    - Procedural 
+    - Functional 
+- Forward and Backward compatibility
+    - Js is not forward compatible, on contrary HTML and CSS is
+    - Jumping the Gaps - Transpiling (old JS can be converted to new using Babel)
+    - Filling the Gaps - Polyfill (missing the API method)
+    - Interpreted(scripting language)/ compiled language
+        - Interpreted me line by line code compilation hot hai 
+        - In parsed/compiled language, first is parsed then compilation forming (Abstract Syntax Tree - AST)and then execution 
+        - So JS is parsed/Compiled (specific, this "compilation" produces a binary byte code (of sorts), which is then handed to the "JS virtual machine" to execute)
+        - meaning the tools (including the JS engine) process and verify a program (reporting any errors!) before it executes.
+    - JS also supports (Just-in-time) JIT processing, also debating for interpreted
+    - WASM(Web Assembly) - ASM.js 
+        - Addressing pressures on the runtime performance
+        - To be get converted to a code that can be compiled by JS engine skipping the compilation/compilation JS engine already does.
+        - Here happens AOT(Ahead of Time).
+        - Strict Mode
+            - Kind of guide for best practices to write JS so that optimally compiled
+            - All transpiled code is written in strict mode
+
+
+
+1.1 Browser environment, specs
+- JS is for Web Browsers can be platform/ web server/ host 
+- Js running in the web browser
+- Window (root)
+    - DOM (Document object model)
+    - BOM (Browser object model)
+        - Navigator
+        - Screen
+        - Location
+        - Frames
+        - History
+    - JS 
+        - Object
+        - Array
+        - Function
+- DOM 
+    - Shows all page contents/structure as objects that can be modified
+    - Main entry point is the “document” object (like document.body.style.background = “red”)
+    - DOM is not only for browsers (eg. Server-side scripts that downloads HTML pages)
+    - CSSOM for styling used together for DOM
+- BOM 
+    - Additional objects provided by the browser for working everything except the document
+    - navigator.userAgent object  ,   location.href object(shows current URL)
+    - Other objects are alert, confirm, prompt
+
+
+1.2 DOM tree
+- Every HTML tag is an object, text inside tag as well
+- all these can be accessed by JS and can be modified
+- Spaces and newlines can totally be considered part of the DOM.
+- There are only two top-level exclusions:
+    * Spaces and newlines before <head> are ignored for historical reasons.
+    * If we put something after </body>, then that is automatically moved inside the body, at the end, as the HTML spec requires that all content must be inside <body>. So there can’t be any spaces after </body>.
+- Browser Autocorrects the malformed HTML
+    - But only for tables there’s a special case that have to include <tbody>
+- Other node types are comments - there are 12 but we work with only 4
+    - Document
+    - Element
+    - Text
+    - comments
+
+
+1.3 Walking the DOM
+- The topmost one is <html>  =   document.documentElement
+- Then  <body>. =  document.body (here the script can be null(doesn’t exist) as well as if browser have not read it yet)
+- Then we have. <head>  =.  document.head
+- Children Nodes:
+    - First child/ last child 
+    - Descendants
+    - Usage of 
+        - for(let node of document.body.childNodes) use for …… of model  not for…… in model
+- Element only Navigation
+    - As children nodes further can have texts, elements etc so to access them
+- Also in tables we have to give the specific type or properties for the elements like table.rows/ tr.cells. / tr.rowIndex etc..
+
+
+
+
+-> have to ask about the gap filling (Polyfill) and  transpiring (jumping the gaps) in detail.
+
+About JS engine
+About the hoisting
+Differences in Let, Var and Const 
+Also about variable creation
+And scopes
+Object creation
+Parsing in detail

@@ -1,0 +1,95 @@
+Constructor and ‘new’ Operator
+
+- By {…} this we can create an object but may have to create multiple objects so that can be done using the new operator.
+
+- Constructor function 
+    - Regular functions just with   ->.   1. Starts with capital letters    2. Should executed with new operator
+function User(name){
+    this.name = name;
+    this.isLoggedin = true;
+}
+let user = new user("jack");
+console.log(user.name);
+consoe.log(iser.isLoggedin);
+
+- Whenever we see a function is executed with the new we see the following steps happening
+    - A new empty object is created and assigned to ‘this’.
+    - The body of the function is executed and accordingly modifies this and adds new properties.
+    - And then the value of this returned.
+- Any functions (except arrow functions as they don’t have this) can be used as constructors.
+- We can Also have methods in constructor
+
+
+- Constructor functions or, briefly, constructors, are regular functions, but there’s a common agreement to name them with capital letter first.
+- Constructor functions should only be called using new. Such a call implies a creation of empty this at the start and returning the populated one at the end.
+- We can use constructor functions to make multiple similar objects.
+
+JavaScript provides constructor functions for many built-in language objects: like Date for dates, Set for sets etc.
+
+Garbage Collection Mechanism
+
+- It is an automatic memory mgmt that relieves you from doing memory mgmt. it actually destroys the objects which are of no use now.
+- Actually works on Marks and Sweep Algorithm
+Var user =  {name : “maria”};
+user = null;
+// here the object now is unreachable and hence it gets destroyed
+
+Var user = {name : “Charul”};
+Let person = user;
+// here the object does not gets deleted as both the person and the user has the reference to the object. 
+
+
+Object to primitive conversion
+
+- objects are auto-converted to primitives, and then the operation is carried out over these primitives and results in a primitive value.
+- There is no conversion to boolean, all objects are true in boolean context. There are only string and numeric conversions.
+
+Hints 
+- There are three variants of type conversion, that happen in various situations. They’re called “hints”.
+
+Iterables
+
+- Iterable objects are a generalization of arrays. That’s a concept that allows us to make any object useable in a for..of loop.
+
+
+Closures
+
+1   function x(){
+2       var a = 7;
+3        function y(){
+4            console.log(a);
+5        }
+6        return y;
+7    }
+8    var z = x();
+9    console.log(z);
+
+// may also works like this 
+function z(){
+    var a = 100;
+    function y(){
+        var b = 50;
+        function x(){
+            console.log(a,b);
+        }
+        x();
+    }
+    y();
+}
+z();
+
+//so here we see that we can access a and b becouse of the lexical environment contained by x.
+    
+    // function bind together with its lexical environment
+    // function along with its lexical scope forms the closure
+- So what happens in Line the y is assigned to z and the execution context of x() is gone.
+And hence we can use z to access y outside x.
+
+Uses of Closures
+- Module Design pattern
+- Currying
+- Functions like once
+- Memoize
+- Maintaining state in async world
+- seTimeouts 
+- Iterators etc;

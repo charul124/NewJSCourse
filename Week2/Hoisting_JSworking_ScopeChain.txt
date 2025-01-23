@@ -1,0 +1,137 @@
+
+2. Hoisting - 
+    - We have an example
+	getName();	// can be accessed
+	console.log(x);    // outputs undefined
+	var x = 7;
+	
+	function getName(){
+		console.log(“Hello”);
+	}
+	
+	we have two phases :
+        - Memory creation phase : 
+            - Variable declarations : are scanned and allocated memory, initialized with the value 'undefined'
+            - Function declarations : are scanned and stored in memory with their entire code
+        - code execution phase :  all the codes are executed line by line
+    - Okay so what happens here is even before allocating the space to the variables and functions the JS created or allocates the space to the variables and functions.
+        - The var gets the undefined but the functions can be invoked and also called inside the function itself as an object.
+    - And there is difference between “not defined” and “undefiend”
+    - In upper example we can get undefined for the variable x
+getName();
+Console.log(getName);
+Console.log(x);
+Function getName(){
+Console.log(“Hello Charul”);
+}
+    - Here we will get Not defined and no space is allocated for x
+    - But if we write it as an arrow function like
+Var getName = ()  =>  {
+Console.log(“Hello Charul”);
+}  
+
+	And if it is invoked before then this also will be allocated the undefined and behaves just like another variable
+
+
+3. How JS works 
+
+    - JS is synchronous single threaded language and hence execute only one command in a time and in a specific order. 
+    - Everything here works in execution context - like it is created as a Call Stack(maintains the order of execution of the execution context) and at first it is populated as GEC(Global execution context) and then further executions takes place as E1, E2 and creation deletion takes place.
+    - It has two divisions: 
+        - Memory Component : Memory Creation phase
+            - Having Key : value pairs (variable environment) all variables and functions are stored in key:value pairs
+        - Code Component :  Code Execution Phase
+            - Here all the code is executed one line at a time also known as thread of execution.
+1->  Var n = 2;
+2-> Function square(num){
+3-> Var ans = num*num;
+4-> Return ans;
+5-> }
+6-> Var square2 = square(n);
+7-> Var square4 = square(4);
+Memory (phase 1)	Code (Phase 2)	Call Stack
+ n : undefined	 n  : 2	
+Square : {….}		
+Square2 : undefined		
+Square4  : undefiend		GEC
+							
+Code Execution will again have an execution context for inside the function
+    - Whenever any new function is invoked every time a new execution context is created .
+Code (Phase 2)
+Memory 	Code	Call Stack
+Num (parameter): 2 (this 2 is passed from the code execution from the argument n)	 Num * Num (2x2 which is eventually 4 will be passed to the ans )	
+Ans : undefined	And here then ans = 4	E1
+	And whenever the line “Return ans” is executed the ans is returned from the local memory to wherever it is invoked.	GEC
+Memory(Phase 1)
+Square2 : 4 will be assigned to the variable		GEC as E1 completes it is popped off the stack
+
+After we have returned the ans the call stack will be empty again and again over all a new execution context for line 7 - will be created.
+Code (Phase 2)
+Memory 	Code	Call Stack
+Num : undefined	 Here first num parameter will be passed from the argument having 4, then num*num will be executed. 	
+Ans undefined	Ans will be assigned 16 and 	E2
+	Return ans will be executed 	GEC
+Memory(Phase 1)
+Square4 : 16 will be assigned to the variable	GEC as E2 completes it is popped off the stack
+And here after whole program execution whole global execution context will be deleted and call stack becomes empty.
+
+
+4. Scope Chain
+    - depends completely on the lexical environment : where can we access the specific variable/ function in the whole program
+    - Lexical(lexical means hierarchal/ in order) environment is the local memory along with the lexical environment of its parent and it is created whenever a new EC is created.
+    - So actually what happens is whenever new execution context is created it has the memory of the previous EC or the parent but vice-versa is not possible.
+    - And going down to GEC the lexical environment of GEC points to null.
+
+
+
+5. JS Variables Declaration - Var, Let and Const 
+	
+    - Var
+        - Can be accessed till the nearest function 
+        - Can be changed again again and also can be declared again
+        - It has functional scope
+
+	5.1  Let and Const are the temporal deadzones(time from when the “let a” is initialized in separate memory till the value is assigned to the let a variable).
+
+    - Let  (was given in ES6)
+        - Can be accessed till the nearest brackets only
+        - Can re-assign the value but cannot be re-declared
+        - Block Scope
+    - Const  (was given in ES6)
+        - Also accessed till brackets only but is constant overall and cannot be changed
+        - Block scope
+
+	console.log(b);
+    let a = 10;
+	console.log(a);
+	var b = 100;
+    - So what happens here is we already know that b has been already allocated memory as undefined in Global space and can be accessed before initialization and hence hoisting works so hoisting works for let and const as well but accessing before declaration will turn up an error and hence a has to be accessed after declaration only. 
+    - Though memory has been allocated but it is in the separate space (not in global) hence throws error.  
+    - Here we can have following types of errors 
+        - Reference Error : if some variable is not declared or accessing some let/const variable before initializing.
+        - Syntax Error :  maybe some error in the syntax, also let cannot be re-declared
+        - Type Error : cannot change from const type to any other  
+	5.2  Let and Const have local scope (Block Scope / function scope): Apart we have Global Scope()
+    - Block is also known as Compound Statement
+{
+// valid JS code
+// block is used to combine multiple JS statements into one group where JS expects a single statement to be syntactically correct.
+    var a = 10;
+    let b = 20;
+    const c =  30;
+    console.log(b);
+    console.log(c);
+}
+    
+console.log(a);
+
+    - Here we will see that a comes under the global scope but b and c being let and const comes under block scope and cannot be accessed outside the block. But we can access a anywhere in the global scope.
+    - Block Scope is what all variables and functions can be accessed inside the block.
+
+    - Shadowing in JS
+        - If the same name variable is declared inside the block the new value gets assigned. (Happens for the var only) for the let and const the variable does not change as both the variables are present in the different scopes.
+        - Shadowing not only behaves inside the block but also behaves same way inside the function.
+        - Illegal shadowing :
+            - We cannot shadow a let/const variable with a var variable inside the block scope but can be re-declared similar way within a function.
+        - We also have Lexical scope : means one inside another 
+            - The variable value from nearest bracket will be consoled.
