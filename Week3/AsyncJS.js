@@ -30,12 +30,7 @@ console.log("Me Second");
 // function display(data){
 //     console.log(data);
 // }
-git ini
-git add .
-git commit -m "{initial_commit_message}"
-git branch -M main
-git remote add origin https://github.com/{username}/{repository_name}.git
-git push -u origin main
+
 // const anotherdata = fetch('https://api.github.com/users/charulagrl');
 // anotherdata.then(display);
 
