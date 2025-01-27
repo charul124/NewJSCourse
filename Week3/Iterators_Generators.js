@@ -51,6 +51,8 @@ console.log(nextele());
 
 //-so iterators turn our data into a stream of data we can access
 
+
+//Generators
 function creatflow(array){
     let i = 0;
     const inner= {
@@ -62,6 +64,7 @@ function creatflow(array){
     }
     return inner;
 }
+
 
 const returnflow = creatflow([12,45,66]);
 const res1 = returnflow.next();

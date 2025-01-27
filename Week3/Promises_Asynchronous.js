@@ -29,6 +29,8 @@ console.log("Me Second");
 
 
 // -promises -> significant ES6 feature
+// -Promises are the foundation for handling asynchronous operations in modern JavaScript. 
+// -They represent the eventual result (success or failure) of an asynchronous operation.
 // -promises objects are used to handle asynchronous operations in JavaScript
 // console.log("-----------------Promises-----------------");
 
