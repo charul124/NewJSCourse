@@ -1,0 +1,126 @@
+#createroot :
+creates a DOM -> as compares the owns DOM 
+and main DOM and changes only the values which are changed
+
+UI updation algorithm so that repeated updates can be ignored
+=> React Fibre Algorithm 
+- increases stability in the area of animation/layout/gestures
+- the main feature is incremental rendering => 
+            ability to split the rendering into chuncks and spread over multiple frames 
+            also to abort, pause, reuse, assign priority etc
+
+Reconciliation => react algo to differenciate one tree with another to 
+        determine which necessary parts to be changed.
+
+        - when react application is rendered, a tree of nodes is 
+        generated and saved into the memory and then flushed into rendering environment.
+        - when state changes are performed 
+        new tree is generated and diffed withthe previous tree and compute what operations needed.
+
+  1.diff components types are assumed to generate diff trees
+    and react will not attept to diff them but replace old trees completely
+  2.Diff of lists is performed through keys should be stable, predicatable and unique
+  3.Push based Approach (user) & Pull Based Approach (React)
+       
+#Creating and nesting components 
+- React components are JavaScript functions that return markup which is JSX
+
+
+
+#NPM : it is pachage manger for node JS
+npm allows to bring the code from the npm open source registries 
+and hence npm install react will install the recent version of react from the registry
+
+#pnpm : 
+can be taken as the newer version of npm, 
+npm maintains a flat file structure and installs everything
+wheresa pnpm choose to organise the node_mod directory 
+
+#ESLint : (semantics and syntax)
+a static code analysis tool that 
+helps developers find and fix issues in JavaScript code
+code adheres to coding standards and best practices.  
+
+#JSX :
+used to compose HTML-style markup inside the react components
+it resembles React.createElement() method and hence shots down everything
+and vite will not transpile if the file is only .js it requires .jsx
+
+#Hooks :
+can add interactivity, side effects to normal react components 
+    enables to use React state and lifecycle features
+    #useState: Allows you to add state to a function component.
+    #useEffect: Lets you perform side effects in your component, 
+    such as fetching data, subscribing to events, or directly manipulating the DOM.
+
+=> two way data binding(state changes <=> input value updates) is not possible iin react,
+    we have to somehow make it dynamic to render the page 
+
+=> hooks can never be inside the conditionals, loops etc 
+
+#useEffect:
+    allows to first do the render of the component as user sees something
+    and soon after the render do something(here being effect) 
+    #like eg: here user will first see the UI then request the list of pizzas 
+
+
+React Lifecycle : 
+
+- Components in react are basically JS functions which gets executed and hence can be called functional component(){}
+- It allows to return the JSX from the function which is ultimately the markup which can be understood by the browser 
+
+- So as the application is running it will go through the following lifecycle
+- We can achieve react lifecycle with the help of the hooks
+- 3 parts (render -> update -> unmounts)
+
+    - render() is used to render HTML of the component in react for class based components
+    - In functional lifecycle usestate can replace the constructor phase and render 
+    - Runs during the mounting and updating the component
+    1. Initial Render (Mount).   -> Birth of the component
+        - Run all code inside the function body
+        - Initialize all the values (states , variables, etc)
+        - Return the JSX will convert to markup and will go to the virtual DOM - > DOM (what user actually sees).      (In the meantime here the use effect can run asynchronously)
+        - After component renders output to the DOM for the first time. componentDidMount()
+        - The useEffect hook with an empty dependency array simulates the componentDidMount lifecycle method
+        - Okay so before update and initializing ends if the use-effect have the cleanup functions it will run for the func before if updates the new values
+    2. Update (Re-Render).     ->  Growth of the component
+        - We will run again the code in the function body
+        - Here rather than initializing again we will update the change of values
+        - Hence function will again return the 
+            - JSX -> markup -> virtual DOM -> DOM -> Browser
+        - componentDidUpdate() runs updating the DOM in response to the prop and state changes
+        - By using the useEffect hook without a dependency array, you can simulate the behaviour of componentDidUpdate by changes in props and states
+    3. Exit (unmount).       ->  Death of the Component
+        - Happens when the component is no longer needed and no longer been shown on the actual screen
+        - componentWillUnount() calls before the component is destroyed for cleanup.
+        - Releasing all the values from the memory (useState, variables, etc)
+        - Runs cleanup functions
+        - And at last all these will be sent to the virtual DOM and then to DOM and which will be sent to the browser 
+        - We can achieve by returning a function from useEffect hook 
+
+- On the Server 
+        - Again we ca have async (fetch data etc) / functional components  
+        - But we don’t have hooks here 
+        - Returns the JSX as the HTML and further sent to the browser 
+        - And if we want to update 
+            - Some function is gonna run on the server (revalidatePath(“/”))
+            - And the changed HTML is sent to the browser
+
+
+
+
+React Hooks : 
+
+- Features of class based components used in the function based components 
+- Allows to use the states and other features without writing the classes or object oriented programming 
+- These actually are the functions which hook into the react state and lifecycle features 
+    1. useState ->  can update the state and set initial value before which can be used repeatedly
+    2. useEffect -> if the components updates and we want something to do then we use useEffect and  also we want to set the state also.
+    3. useContext -> using context api enables to use the function globally which is deep nested into other functions.
+    4. useRef -> reference rakhne ke liye kaam aata hai for any of the components.
+
+
+Props :
+
+- Makes the components reusable as we can pass the values from to other components .
+
