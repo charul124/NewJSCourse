@@ -9,14 +9,14 @@ let user = {};    //object literal syntax
 
 let user = {
     name : "Charul",
-    email : "charul@tekion.com"
+    date : "yyyy-mm-dd"
     };
 To remove a property we use 
 delete user.email;
 Multi word property names can also be added but then we have to quote them
 let user = {
     name : "Charul",
-    email : "charul@tekion.com",
+    date : "yyyy-mm-dd"
     "Full Name" : "Charul Srinivas"
     };
 And to access this multiword property the dot doesn’t work we have to use brackets 
